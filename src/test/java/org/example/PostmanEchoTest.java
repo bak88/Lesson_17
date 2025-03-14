@@ -21,7 +21,6 @@ public class PostmanEchoTest {
     @Test
     public void testGetRequest() {
         given()
-                .contentType("application/json")
                 .when()
                 .get("/get?foo1=bar1&foo2=bar2")
                 .then()
@@ -46,18 +45,18 @@ public class PostmanEchoTest {
     @Test
     public void testPostRawText() {
         given()
-                .contentType("application/json")
+                .body("This is expected to be sent back as part of response body.")
                 .when()
                 .post("/post")
                 .then()
                 .statusCode(200)
                 .body("args", equalTo(Collections.emptyMap()))
-                .body("data", equalTo(Collections.emptyMap()))
+                .body("data", equalTo("This is expected to be sent back as part of response body."))
                 .body("files", equalTo(Collections.emptyMap()))
                 .body("form", equalTo(Collections.emptyMap()))
                 .body("headers.host", equalTo("postman-echo.com"))
                 .body("headers.x-request-start", notNullValue())
-                .body("headers.content-length", equalTo("0"))
+                .body("headers.content-length", equalTo("58"))
                 .body("headers.x-forwarded-proto", equalTo("https"))
                 .body("headers.x-forwarded-port", equalTo("443"))
                 .body("headers.x-amzn-trace-id", notNullValue())
@@ -76,6 +75,7 @@ public class PostmanEchoTest {
     public void testPostFromData() {
         given()
                 .contentType("application/json")
+                .body("")
                 .when()
                 .post("/post")
                 .then()
@@ -107,17 +107,18 @@ public class PostmanEchoTest {
     public void testPutRequest() {
         given()
                 .contentType("application/json")
+                .body("This is expected to be sent back as part of response body.")
                 .when()
                 .put("/put")
                 .then()
                 .body("args", equalTo(Collections.emptyMap()))
-                .body("data", equalTo(Collections.emptyMap()))
+                .body("data", equalTo("This is expected to be sent back as part of response body."))
                 .body("files", equalTo(Collections.emptyMap()))
                 .body("form", equalTo(Collections.emptyMap()))
                 .body("headers.host", equalTo("postman-echo.com"))
                 .body("headers.x-request-start", notNullValue())
                 .body("headers.connection", equalTo("close"))
-                .body("headers.content-length", equalTo("0"))
+                .body("headers.content-length", equalTo("58"))
                 .body("headers.x-forwarded-proto", equalTo("https"))
                 .body("headers.x-forwarded-port", equalTo("443"))
                 .body("headers.x-amzn-trace-id", notNullValue())
@@ -133,7 +134,6 @@ public class PostmanEchoTest {
     @Test
     public void testPatchRequest() {
         given()
-                .contentType("text/plain; charset=ISO-8859-1")
                 .body("This is expected to be sent back as part of response body.")
                 .when()
                 .patch("/patch")
@@ -164,7 +164,6 @@ public class PostmanEchoTest {
     @Test
     public void testDeleteRequest() {
         given()
-                .contentType("text/plain")
                 .body("This is expected to be sent back as part of response body.")
                 .when()
                 .delete("/delete")
